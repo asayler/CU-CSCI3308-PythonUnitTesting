@@ -14,22 +14,36 @@ class TextprocTestCase(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        pass
-
+        
     @classmethod
     def tearDownClass(cls):
         pass
 
     def setUp(self):
-        pass
+        self.text = "abc123"
+        self.p = textproc.Processor(text)
 
     def tearDown(self):
         pass
 
     def test_init(self):
-        text = "tesing123"
-        p = textproc.Processor(text)
-        self.assertEqual(p.text, text, "'text' does not match input")
+        self.assertEqual(self.p.text, self.text, "'text' does not match input")
+    
+    def test_init_number(self):
+       self.assertRaises(TypeError,  textproc.Processor, (3))
+    
+    def test_count_alpha(self):
+        self.assertEqual(self.p.count_alpha(), 3)
+        
+    def test_count_vowels(self):
+        self.assertEqual(self.p.count_vowels(), 1)
+    
+    def test_count_numeric(self):
+        self.assertEqual(self.p.count_numeric(), 3)
+    
+    def test_is_phonenumber(self):
+        self.assertFalse(textproc.Processor(2).is_phonenumber())
+        self.assertTrue(textproc.Processor("303-740-6061"))
 
     # Add Your Test Cases Here...
 
